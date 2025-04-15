@@ -3,12 +3,12 @@ local keyboard,math_random,unique =
 math.random,{}
 
 function os.pullEventRaw(...)
-    local ev_data = table.pack(coroutine.yield(...))
-    local char_in = ev_data[2]
-    if ev_data[1] == "char" and math_random(1,50) < 2 and keyboard:find(char_in) and ev_data[3] ~= unique then
+    local ev_data   = table.pack(coroutine.yield(...))
+    local char_in,_ = ev_data[2]
+    if ev_data[1] == "char" and math_random(1,50) < 2 and keyboard:find(char_in:lower(),_,1) and ev_data[3] ~= unique then
         local char_lw,char_in = char_in:lower()
         while not char_in or not char_in:match"%w" do
-            local sector,symbol_id = math_random(0,1),keyboard:find(char_lw)
+            local sector,symbol_id = math_random(0,1),keyboard:find(char_lw,_,true_val)
 
             local x_offset,keyboard_x =
                 (math_random(1,2)*2-3)*sector,
